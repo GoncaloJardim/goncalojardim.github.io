@@ -1,6 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
+import Diagram from '../components/Diagram.tsx';
+import { getEntry } from 'astro:content';
+const entry = await getEntry('projects', 'account-fit-score');
 ---
-<Base title="Gonçalo Jardim — GTM Data Scientist / Engineer">
-  <main class="wrap section"><h1>Portfolio</h1></main>
+<Base title="Diagram test">
+  <main class="wrap section">
+    <Diagram spec={entry!.data.diagram} client:visible />
+  </main>
 </Base>

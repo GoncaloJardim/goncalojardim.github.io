@@ -23,3 +23,18 @@ h2{font-size:30px;letter-spacing:-.02em;margin:10px 0 6px;font-weight:700}
 .chip{font-size:11px;color:var(--muted);background:var(--soft);border:1px solid var(--line);
   padding:3px 8px;border-radius:999px;display:inline-block}
 @media (max-width:760px){ h1{font-size:38px} h2{font-size:24px} .section{padding:40px 0} }
+
+.gtm-diagram{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#fbfcfe,#fff)}
+.gtm-node{width:150px;background:#fff;border:1px solid var(--line);border-radius:11px;
+  padding:9px 12px;box-shadow:0 1px 2px rgba(11,16,32,.05);font-size:13px}
+.gtm-node .gtm-node-label{font-weight:620;letter-spacing:-.01em}
+.gtm-node .gtm-node-tech{font-size:11px;color:var(--muted);margin-top:3px}
+.gtm-node.gtm-hub{background:var(--accent);border-color:var(--accent);color:#fff}
+.gtm-node.gtm-hub .gtm-node-tech{color:#d9e1ff}
+.gtm-node.gtm-source{border-left:3px solid var(--ok)}
+.gtm-node.gtm-sink{border-left:3px solid var(--accent)}
+.react-flow__node.selected .gtm-node{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.gtm-detail{padding:14px 4px;font-size:13.5px;min-height:24px}
+.gtm-detail .muted{color:var(--muted)}
+.gtm-fallback{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
