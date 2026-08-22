@@ -8,7 +8,7 @@ const { metrics } = Astro.props;
   ))}
 </section>
 <style>
-  .impact{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:36px auto}
+  .impact{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:36px auto}
   .tile{background:var(--soft);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
   .tile .v{font-size:30px;font-weight:720;letter-spacing:-.02em;color:var(--accent)}
   .tile .l{font-size:13px;color:var(--muted);margin-top:4px}

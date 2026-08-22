@@ -109,14 +109,14 @@ Project description and details in Markdown format.
 - **Custom domain**: set `site: 'https://yourdomain.com'`, `base: '/'`, and add a
   `public/CNAME` file containing the domain.
 
-After pushing to `main`, enable Pages in repo Settings → Pages → Source: "GitHub Actions".
+After pushing to `main`/`master`, enable Pages in repo Settings → Pages → Source: "GitHub Actions".
 
 ## Deployment
 
-This site deploys automatically to GitHub Pages on push to `main` via the GitHub Actions workflow in `.github/workflows/deploy.yml`.
+This site deploys automatically to GitHub Pages on push to `main`/`master` via the GitHub Actions workflow in `.github/workflows/deploy.yml`.
 
 To enable:
-1. Push to `main` branch
+1. Push to `main`/`master` branch
 2. Go to repo Settings → Pages
 3. Select "GitHub Actions" as the source
 4. The site will deploy at `https://goncalojardim.github.io/portfolio`
