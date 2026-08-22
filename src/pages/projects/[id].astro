@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import Diagram from '../../components/Diagram.tsx';
+import ImpactBand from '../../components/ImpactBand.astro';
+import { site, withBase } from '../../config';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((p) => ({ params: { id: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const d = project.data;
+---
+<Base title={`${d.title} — ${site.name}`} description={d.pitch}>
+  <main class="wrap section">
+    <p><a href={withBase('')} class="back">← All work</a></p>
+    <span class="eyebrow">{site.tagline}</span>
+    <h1 style="font-size:40px">{d.title}</h1>
+    <p class="lead">{d.pitch}</p>
+
+    <div class="label" style="margin-top:26px">Interactive · animated</div>
+    <h2>How it runs.</h2>
+    <Diagram spec={d.diagram} client:visible />
+
+    <ImpactBand metrics={d.metrics} />
+
+    <article class="prose">
+      <Content />
+    </article>
+
+    <div class="meta">
+      <div class="chips">{d.tech.map((t) => <span class="chip">{t}</span>)}</div>
+      {d.repo && <a class="btn ghost" href={d.repo} target="_blank" rel="noopener">View the code →</a>}
+    </div>
+
+    <p style="margin-top:32px"><a class="btn" href={site.calendly} target="_blank" rel="noopener">Book a 30-min call →</a></p>
+  </main>
+</Base>
+<style>
+  .lead{font-size:19px;color:var(--muted);max-width:680px}
+  .back{color:var(--muted);font-size:14px}
+  .prose{max-width:680px;margin-top:10px}
+  .prose :global(h2){font-size:22px;margin-top:32px}
+  .prose :global(p),.prose :global(li){color:#26304a}
+  .meta{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:28px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+</style>

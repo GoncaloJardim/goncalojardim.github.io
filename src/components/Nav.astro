@@ -1,0 +1,19 @@
+---
+import { site, withBase } from '../config';
+---
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href={withBase('')}>{site.name}</a>
+    <div class="nav-links">
+      <a href={withBase('#work')}>Work</a>
+      <a href={withBase('#about')}>About</a>
+      <a class="btn" href={site.calendly} target="_blank" rel="noopener">Book a call</a>
+    </div>
+  </div>
+</nav>
+<style>
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-weight:650;letter-spacing:-.01em}
+  .nav-links{display:flex;gap:22px;align-items:center;color:var(--muted);font-size:14px}
+</style>
