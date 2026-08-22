@@ -1,11 +1,42 @@
 ---
 import Base from '../layouts/Base.astro';
-import Diagram from '../components/Diagram.tsx';
-import { getEntry } from 'astro:content';
-const entry = await getEntry('projects', 'account-fit-score');
+import Hero from '../components/Hero.astro';
+import ImpactBand from '../components/ImpactBand.astro';
+import EngineStrip from '../components/EngineStrip.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site } from '../config';
+import { getCollection } from 'astro:content';
+import { aggregateHeadlineMetrics } from '../lib/metrics';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const headline = aggregateHeadlineMetrics(projects);
 ---
-<Base title="Diagram test">
-  <main class="wrap section">
-    <Diagram spec={entry!.data.diagram} client:visible />
-  </main>
+<Base title={`${site.name} — ${site.tagline}`}>
+  <Hero />
+  <ImpactBand metrics={headline} />
+  <EngineStrip />
+  <section id="work" class="wrap section">
+    <div class="label">Selected work</div>
+    <h2>Case studies.</h2>
+    <div class="cards">
+      {projects.map((p) => (
+        <ProjectCard id={p.id} title={p.data.title} pitch={p.data.pitch}
+          metric={p.data.metrics[0]} tech={p.data.tech} />
+      ))}
+    </div>
+  </section>
+  <section id="about" class="wrap section">
+    <div class="label">About</div>
+    <h2>How I work.</h2>
+    <p class="sub" style="max-width:640px;color:var(--muted)">
+      I design and ship GTM data systems end to end — from predictive models in Python and Snowflake to
+      automation in n8n and version-controlled outbound infrastructure. If you want to see one of these
+      running in your stack, let's talk.
+    </p>
+    <p style="margin-top:20px"><a class="btn" href={site.calendly} target="_blank" rel="noopener">Book a 30-min call →</a></p>
+  </section>
 </Base>
+<style>
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+  @media (max-width:760px){ .cards{grid-template-columns:1fr} }
+</style>

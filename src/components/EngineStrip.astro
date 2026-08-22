@@ -1,0 +1,30 @@
+---
+const steps = [
+  { n: '01 · SCORE', h: 'Account Fit', p: 'Who looks like a winner' },
+  { n: '02 · ENGAGE', h: 'Engagement Score', p: "Who's hot right now" },
+  { n: '03 · ENRICH', h: 'Enrichment Engine', p: 'Find & validate contacts' },
+  { n: '04 · ACTIVATE', h: 'Outbound', p: 'Safely ship campaigns' },
+];
+---
+<section class="wrap section">
+  <div class="label">The GTM engine</div>
+  <h2>Four systems, one pipeline.</h2>
+  <p class="sub">Each project is a stage in the same machine — from knowing who to target to putting clean, ready-to-work leads in front of sales.</p>
+  <div class="engine">
+    {steps.map((s, i) => (
+      <>
+        <div class="step"><div class="n">{s.n}</div><h4>{s.h}</h4><p>{s.p}</p></div>
+        {i < steps.length - 1 && <span class="arrow">→</span>}
+      </>
+    ))}
+  </div>
+</section>
+<style>
+  .sub{color:var(--muted);max-width:620px}
+  .engine{display:flex;gap:10px;align-items:center;margin-top:26px;flex-wrap:wrap}
+  .engine .step{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .engine .step .n{font-size:12px;color:var(--accent);font-weight:650}
+  .engine .step h4{margin:6px 0 2px;font-size:15px}
+  .engine .step p{margin:0;font-size:12.5px;color:var(--muted)}
+  .engine .arrow{color:#c2cad9;font-size:20px}
+</style>
