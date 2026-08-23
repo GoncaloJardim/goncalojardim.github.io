@@ -1,9 +1,9 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 
-// See plan Global Constraints for user-site vs project-site vs custom-domain.
+// User site: repo is goncalojardim.github.io, served at the domain root.
 export default defineConfig({
   site: 'https://goncalojardim.github.io',
-  base: '/portfolio',
+  base: '/',
   integrations: [react()],
 });
