@@ -42,9 +42,9 @@ The account and contact database was thin and going stale, and enrichment was a 
 
 ## What I built
 
-I designed and owned the end-to-end enrichment architecture end to end: prioritization, prospecting, enrichment, validation, and activation, orchestrated in n8n. The pipeline chains an ML fit-score model, LLM-based look-alike prospecting, and — the centerpiece — a fan-out enrichment waterfall that hits multiple contact-data providers in parallel rather than relying on any single vendor's coverage.
+I owned this one end to end — the whole architecture from prioritisation through prospecting, enrichment, validation and activation, orchestrated in n8n. The pipeline chains an ML fit-score model, LLM-based look-alike prospecting, and the centrepiece: a fan-out enrichment waterfall that hits multiple contact-data providers in parallel instead of betting everything on one vendor's coverage.
 
-I modeled and normalized the enriched data in Snowflake via dbt, with dedup logic and a 4-6 month refresh cadence so the warehouse doesn't quietly go stale again. I also built a multi-provider contact-enrichment waterfall paired with an email-validation stage that routes every record into valid, catch-all, or invalid buckets, and defined the success metrics and reporting used to coordinate the effort across Data, Marketing and RevOps.
+I modelled and normalised the enriched data in Snowflake via dbt, with dedup logic and a 4-6 month refresh cadence so the warehouse doesn't quietly go stale again. The validation stage routes every record into valid, catch-all or invalid buckets, and I defined the success metrics and reporting used to keep Data, Marketing and RevOps pointing the same way.
 
 ## How it works
 

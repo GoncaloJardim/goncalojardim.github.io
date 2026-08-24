@@ -1,6 +1,6 @@
 ---
 title: "Account Engagement Score"
-pitch: "A behavioural propensity model that scores the entire prospect universe on how actively each account is engaging right now."
+pitch: "The timing layer on top of fit — a behavioural model that scores every account on how actively it's engaging right now, so the team knows not just who to work, but when."
 order: 2
 featured: true
 tech: ["Python", "scikit-learn", "Snowflake", "dbt", "SQL"]
@@ -25,22 +25,43 @@ diagram:
     - { from: "scoring", to: "activation" }
 ---
 
-## The problem
+## Fit tells you who. This tells you when.
 
-Fit alone tells you whether an account is a good match — it doesn't tell you whether it's ready *now*. Every week, thousands of accounts across the prospect universe throw off thousands of behavioural signals: meetings, page views, marketing emails, event attendance, developer and community activity. Almost all of it is noise, and there was no data-driven way to know which signal types actually predicted anything, or how to weight them against each other.
+Fit is a static judgement — it says this account *looks* like the ones that closed. It says nothing about whether they're thinking about you this week. And a perfect-fit account that's gone completely silent is worth less right now than a decent-fit account that just booked a demo, watched three pricing pages and pinged the community.
+
+The catch is that "engagement" is thousands of accounts throwing off thousands of weekly signals — meetings, page views, marketing emails, event attendance, developer and community activity — and almost all of it is noise. Nobody could say which signal types actually predicted anything, or how to weigh a demo against a newsletter open. So the team either chased whoever was loudest or fell back on fit alone.
+
+What makes this genuinely useful is pairing it *with* fit in a 2×2 — targeting on one axis, timing on the other — because each GTM team reads a different quadrant:
+
+- **High fit + high engagement** → SDRs and AEs work these today, they're the whole point
+- **High fit + low engagement** → Marketing's job: nurture and create the timing that isn't there yet
+- **Low fit + high engagement** → interesting but a trap, RevOps uses it to *avoid* over-routing tyre-kickers
+- **Any fit + a sudden engagement spike** → the trigger that should fire a play, an SLA, a routing rule
+
+Fit sets the ceiling on *who*. Engagement decides the *order* you work them in. You need both.
 
 ## What I built
 
-I built the Account Engagement Score: an L1-regularised logistic regression that learns from historical opportunity outcomes which behavioural touch types actually predict opportunity creation, and calibrates that into a single 0-100% score. Underneath it sits a feature pipeline that reduces roughly 30 candidate signal types down to a clean per-account feature matrix, binarised so that one high-frequency touch type can't drown out everything else.
+The Account Engagement Score is an L1-regularised logistic regression that learns, from historical opportunity outcomes, which behavioural touch types actually predict conversion — and calibrates that into a single 0-100% score. Under it sits a feature pipeline that takes roughly 30 candidate signal types down to a clean per-account matrix, binarised so one high-frequency touch (say, page views) can't drown out a rarer but far more meaningful one (say, a booked meeting).
 
-Getting the model right took about nine iterations and a three-stage layered approach: a diagnostic run to understand the raw signal, a positive-only fit to isolate what genuinely predicts conversion, and a hybrid "manual floor" version where every prospect touch nudges the score up (never down) while the fitted signals still dominate the ranking. I added a recent-touch gate so accounts that have gone silent score zero, then percentile-banded the output into Very High/High/Medium/Low so it reads as a ranked, explainable priority list rather than a black-box number. I also built a parallel Contact Engagement Score at the individual-contact grain, paired engagement against fit in a 2x2 targeting-vs-timing framework, and generated per-account score-driver explanations in both JSON and human-readable form.
+Getting it right took about nine iterations and, in the end, a three-stage approach:
+
+1. a **diagnostic run** to see what the raw signal even looked like
+2. a **positive-only fit** to isolate the touch types that genuinely predict conversion
+3. a **hybrid "manual floor"** where every prospect touch only ever nudges the score *up*, never down, while the fitted signals still drive the ranking
+
+That third stage came out of a real tension: the pure model would sometimes penalise an account for a touch that felt intuitively positive, and that's exactly the kind of thing that makes a sales team stop trusting the number. The manual floor keeps the maths honest while making sure the score never does something a rep would find obviously wrong.
+
+I added a recent-touch gate so accounts that have gone quiet score zero rather than coasting on old activity, then percentile-banded the output into Very High / High / Medium / Low so it reads as a ranked priority list, not a black box. I also built a parallel Contact Engagement Score at the individual grain, and generated per-account driver explanations in both JSON and plain English so anyone could see *why* an account was hot.
 
 ## How it works
 
-Behavioural data flows in from conversation intelligence, first-party product and web events, marketing automation, chat, events, community activity, and CRM opportunity history, and gets unified into a warehouse modelling layer. From there, feature engineering aggregates each account's distinct touch timestamps by type, pivots them into an account-by-feature matrix, and binarises over a rolling lookback window so frequency doesn't distort the signal.
+Behavioural data flows in from conversation intelligence, first-party product and web events, marketing automation, chat, events, community activity and CRM opportunity history, and gets unified into a warehouse modelling layer. Feature engineering aggregates each account's distinct touch timestamps by type, pivots them into an account-by-feature matrix, and binarises over a rolling lookback window so raw frequency doesn't distort the picture.
 
-That feature matrix trains the L1 logistic regression, which is class-weighted and validated with stratified cross-validation. The output coefficients, the recent-touch gate, and percentile banding combine to produce a calibrated score with attached driver explanations, which is then written back for activation: priority outbound lists, nurture segments, routing and SLA inputs, and BI dashboards.
+That matrix trains the L1 logistic regression — class-weighted and cross-validated — and the output coefficients, the recent-touch gate and the percentile banding combine into a calibrated score with its drivers attached. From there it writes back for activation: priority outbound lists, nurture segments, routing and SLA inputs, and the BI dashboards each team lives in.
 
 ## Impact
 
-The top engagement band converts to opportunities at roughly 190x the rate of accounts with no engagement at all. The model concentrates effort on a very small, high-value slice of the universe — about 2% of accounts flagged as genuinely active, with the top two bands converting at a combined ~26%. Feature selection cut the candidate signal set from around 30 touch types down to roughly 20 that actually carry predictive weight, and the model holds a strong ROC-AUC of ~0.95 in cross-validation (precision is intentionally low by design — this is a prioritisation ranking, not a hard classifier).
+The top engagement band converts to opportunities at roughly 190x the rate of accounts with no engagement at all. Just as usefully, it concentrates effort on a tiny slice of the universe — about 2% of accounts flagged as genuinely active — with the top two bands converting at a combined ~26%. Feature selection cut the candidate set from around 30 touch types down to the ~20 that actually carry weight, so the team could finally point at a short, agreed list of "these are the signals that matter".
+
+The model holds a strong ROC-AUC of ~0.95 in cross-validation. Precision is intentionally low — this is a prioritisation ranking, not a hard yes/no classifier, and for deciding what order to work a list in, ranking is the job.

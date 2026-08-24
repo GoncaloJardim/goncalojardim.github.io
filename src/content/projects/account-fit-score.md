@@ -1,6 +1,6 @@
 ---
 title: "Account Fit Score"
-pitch: "An ML model that grades every company in the market on how likely it is to become a real opportunity."
+pitch: "A model that scores every company in your market on how likely it is to become a real opportunity — so the team works the few hundred that matter, not the tens of thousands that don't."
 order: 1
 featured: true
 tech: ["Python", "scikit-learn", "pandas", "Snowflake", "dbt", "Superset"]
@@ -27,22 +27,37 @@ diagram:
     - { from: "writeback", to: "bi" }
 ---
 
-## The problem
+## Why score the TAM at all
 
-The legacy account scoring model was a point-based system built on crude firmographics, and it barely correlated with what actually closed. Its correlation to real closed-won outcomes was close to zero (~0.03), and even its "best" tier of accounts only marginally outperformed the average account. Reps were spending real time working accounts that looked fine on paper but had almost no chance of ever becoming a deal, while genuinely promising accounts went untouched simply because nothing was surfacing them.
+We had tens of thousands of accounts in the addressable market and a sales team that can only really work a few hundred of them at a time. So the question was never "is this a good account?". It was "out of everything out there, which few hundred do we spend our hours on this quarter?"
+
+The old answer was a point-based fit score built on crude firmographics — headcount, revenue, industry. The problem was that it barely predicted anything. Its correlation to closed-won was about 0.03, basically noise, and its "best" tier converted at roughly the same rate as a random account. So reps burned hours on accounts that looked fine on a spreadsheet and never closed, while genuinely good-fit ones sat untouched because nothing surfaced them.
+
+That's expensive for every GTM team, not just sales:
+
+- **SDRs and AEs** work a prioritised list that's no better than working the alphabet
+- **Marketing** spends budget and nurture on segments that don't convert
+- **RevOps** can't route leads, draw territories or set SLAs on a signal that isn't real
+- **Partnerships and AMs** have no shared, defensible definition of "who's worth a play"
+
+Prioritising the TAM well is the one decision that quietly sets the ceiling on everything downstream. That's the whole reason this exists.
 
 ## What I built
 
-I built an end-to-end account-scoring model that predicts the probability of an account becoming a qualified opportunity, trained on historical CRM outcomes. That meant engineering and grouping the predictive features that actually mattered — industry, data warehouse, cloud provider, roughly 40 individual technologies collapsed into technographic groups, prior opportunity history, and product usage signals — and choosing an interpretable model (logistic regression) so the coefficients could be translated into plain-English "this raises/lowers fit" signal typologies that non-technical stakeholders could trust.
+I replaced the gut-feel score with one that actually learns from what closed — an end-to-end model that predicts each account's probability of turning into a qualified opportunity, trained on historical CRM outcomes.
 
-Once the model was validated, I scored the entire addressable market — tens of thousands of accounts — bucketed them from Very Low to Very High fit, and generated a human-readable trait summary for every single one. I also built the stakeholder-facing BI dashboard used to explore the results, and ran the validation work against the legacy score and against real account outcomes before anyone was asked to trust it.
+Two decisions shaped it. First, I spent most of the effort on the features rather than the algorithm: industry, data warehouse, cloud provider, and roughly 40 individual technologies collapsed into technographic groups, plus prior opportunity history and product-usage signals. That's where the real signal lived. Second, I deliberately chose an interpretable model — plain logistic regression — so I could translate the coefficients into "this trait raises fit / this one lowers it" typologies in plain English. On a GTM team, a score nobody can explain is a score nobody trusts, and a score nobody trusts doesn't get used.
+
+Then I scored the entire addressable market — tens of thousands of accounts — bucketed everything from Very Low to Very High, and generated a human-readable trait summary for every single account so a rep could see *why* it landed where it did. I built the Superset dashboard people actually explore it in, and I validated the whole thing against the legacy score and against real outcomes before asking anyone to rely on it.
 
 ## How it works
 
-The pipeline starts from historical CRM data — accounts, opportunities, SQL outcomes, and the firmographic/technographic attributes tied to them. That gets assembled into a modeling table in the warehouse, then run through feature engineering to encode, scale and group the raw attributes into the signal typologies the model actually consumes. From there, a logistic regression is trained on a stratified split with cross-validated hyperparameter tuning, optimizing for F1 rather than raw accuracy since the classes are imbalanced.
+The pipeline starts from historical CRM data — accounts, opportunities, SQL outcomes, and the firmographic and technographic attributes attached to them. That gets assembled into a single modelling table in Snowflake, then run through feature engineering to encode, scale and group the raw attributes into the signal typologies the model consumes.
 
-The trained model is then applied market-wide: every account in the addressable market gets a 0-100% score, a bucket, and a generated trait summary explaining why it landed where it did. Scores and buckets are written back into the warehouse and onto CRM fields so they slot directly into existing GTM prioritization workflows, and the same data feeds a self-serve BI dashboard for anyone who wants to explore it further.
+From there a logistic regression trains on a stratified split with cross-validated tuning, optimising for F1 rather than raw accuracy since the classes are heavily imbalanced (most accounts never convert, so accuracy alone would just reward predicting "no"). The trained model then scores every account in the market: a 0-100% number, a bucket, and a generated trait summary. Scores and buckets write back into the warehouse and onto CRM fields so they drop straight into the prioritisation workflows the team already runs, and the same data feeds the self-serve dashboard.
 
 ## Impact
 
-The top decile of scored accounts converted to opportunities at roughly 10x the rate of the legacy model's top tier. The top fit bucket alone saw a 45-50% SQL rate and around a 30% opportunity rate, while mid-tiers dropped to low single digits and the bottom buckets fell under 0.3% — giving the GTM team the confidence to deliberately deprioritize a large share of the total market. Where the legacy score offered almost no signal (~0.03 correlation to outcomes), the new score produced a clear, monotonic conversion gradient from bottom to top bucket.
+The top decile of scored accounts converted to opportunities at roughly 10x the rate of the legacy model's top tier. The top fit bucket alone hit a 45-50% SQL rate and around a 30% opportunity rate, while the mid-tiers dropped to low single digits and the bottom buckets fell under 0.3% — which is what finally gave the team the confidence to deliberately *ignore* a large chunk of the market instead of pretending to work all of it.
+
+The legacy score offered almost no signal (~0.03 correlation to outcomes). This one produced a clean, monotonic conversion gradient from bottom bucket to top — the kind of thing sales, marketing and RevOps could all point at and agree on.
