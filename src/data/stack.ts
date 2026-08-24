@@ -26,7 +26,7 @@ export const stack: StackCategory[] = [
       { name: 'Snowflake', logo: 'snowflake.svg' },
       { name: 'BigQuery', logo: 'bigquery.svg' },
       { name: 'Databricks', logo: 'databricks.svg' },
-      { name: 'dbt', logo: 'dbt.png', lockup: true },
+      { name: 'dbt' },
       { name: 'Google Cloud', logo: 'gcp.svg' },
     ],
   },
