@@ -11,7 +11,7 @@ import { aggregateHeadlineMetrics } from '../lib/metrics';
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const headline = aggregateHeadlineMetrics(projects);
 ---
-<Base title={`${site.name} — ${site.tagline}`}>
+<Base title={`${site.name} · ${site.tagline}`}>
   <Hero />
   <ImpactBand metrics={headline} />
   <EngineStrip />
@@ -30,8 +30,8 @@ const headline = aggregateHeadlineMetrics(projects);
     <h2>How I work.</h2>
     <p class="sub" style="max-width:660px;color:var(--muted)">
       I'm a GTM engineer. I sit between the data team and the sales floor and build the machinery that
-      connects them. Most of what's on this page started as a scrappy question from a rep — "why are we
-      even working these accounts?" — and turned into a model, a pipeline, or an n8n workflow that
+      connects them. Most of what's on this page started as a scrappy question from a rep ("why are we
+      even working these accounts?") and turned into a model, a pipeline, or an n8n workflow that
       answered it for the whole team. I like the problems where the data science has to survive contact
       with a quota. If you've got a TAM you're not sure how to prioritise, or a GTM process still running
       on gut feel and copy-paste, that's exactly my kind of thing.

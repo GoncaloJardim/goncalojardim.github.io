@@ -14,7 +14,7 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 const d = project.data;
 ---
-<Base title={`${d.title} — ${site.name}`} description={d.pitch}>
+<Base title={`${d.title} · ${site.name}`} description={d.pitch}>
   <main class="wrap section">
     <p><a href={withBase('')} class="back">← All work</a></p>
     <span class="eyebrow">{site.tagline}</span>
