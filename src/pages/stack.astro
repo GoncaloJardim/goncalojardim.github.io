@@ -48,7 +48,8 @@ import { stack } from '../data/stack';
   .tool{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;
     padding:12px 14px;background:#fff;transition:.16s}
   .tool:hover{border-color:var(--accent);box-shadow:0 6px 18px rgba(11,16,32,.06)}
-  .tool img{flex:0 0 auto;object-fit:contain}
+  /* Render every logo as a uniform black silhouette (matches the monochrome icon set). */
+  .tool img{flex:0 0 auto;object-fit:contain;filter:brightness(0)}
   .tool img.lockup{height:24px;width:auto;max-width:120px}
   .tool .glyph{flex:0 0 auto;width:30px;height:30px;border-radius:7px;background:var(--soft);
     border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
