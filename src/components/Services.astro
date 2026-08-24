@@ -1,0 +1,47 @@
+---
+const services = [
+  {
+    t: 'Predictive scoring',
+    d: 'Fit, intent and engagement models that tell every GTM team who to work and when, wired straight into routing and prioritisation.',
+    impact: 'top-decile ~10x conversion · used company-wide',
+  },
+  {
+    t: 'Prospecting & enrichment automation',
+    d: 'AI agents that find net-new look-alike accounts, plus a multi-provider enrichment and validation engine that keeps the data clean.',
+    impact: '+30% accounts tracked · ~5x warehouse · bounce 8% to <3%',
+  },
+  {
+    t: 'Outbound infrastructure',
+    d: 'Full-funnel automation from prospecting to AI copy to lead routing, with guardrails so nothing sends by accident.',
+    impact: '5x volume · 700K+ leads/quarter · $1.5M+ pipeline',
+  },
+  {
+    t: 'Experimentation & measurement',
+    d: 'A/B testing frameworks (inferential and Bayesian) so demand-gen bets are provable, not vibes.',
+    impact: '+15% pipeline',
+  },
+];
+---
+<section id="services" class="wrap section">
+  <div class="label">What I do</div>
+  <h2>Services, and the lift they drive.</h2>
+  <p class="sub">Four things I build for GTM teams. Every one of them ships with a number attached.</p>
+  <div class="svc-grid">
+    {services.map((s) => (
+      <div class="svc">
+        <h3>{s.t}</h3>
+        <p>{s.d}</p>
+        <div class="impact">{s.impact}</div>
+      </div>
+    ))}
+  </div>
+</section>
+<style>
+  .sub{color:var(--muted);max-width:620px}
+  .svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+  .svc{border:1px solid var(--line);border-radius:16px;padding:22px;background:#fff}
+  .svc h3{margin:0 0 6px;font-size:17px;letter-spacing:-.01em}
+  .svc p{margin:0 0 14px;font-size:14px;color:var(--muted);line-height:1.55}
+  .svc .impact{font-size:13px;font-weight:650;color:var(--accent);border-top:1px solid var(--line);padding-top:12px}
+  @media (max-width:760px){ .svc-grid{grid-template-columns:1fr} }
+</style>
