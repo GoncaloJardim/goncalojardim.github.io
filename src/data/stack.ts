@@ -35,6 +35,7 @@ export const stack: StackCategory[] = [
       { name: 'Prefect', logo: 'prefect' },
       { name: 'n8n', logo: 'n8n' },
       { name: 'Docker', logo: 'docker' },
+      { name: 'Cargo' },
     ],
   },
   {
@@ -54,10 +55,11 @@ export const stack: StackCategory[] = [
     tools: [
       { name: 'Tableau' },
       { name: 'Power BI' },
+      { name: 'Metabase', logo: 'metabase' },
       { name: 'Preset' },
       { name: 'Sisense' },
       { name: 'Matplotlib' },
-      { name: 'Seaborn' },
+      { name: 'Plotly', logo: 'plotly' },
     ],
   },
   {
@@ -78,15 +80,21 @@ export const stack: StackCategory[] = [
       { name: 'Salesforce' },
       { name: 'Apollo.io' },
       { name: 'ZoomInfo' },
-      { name: 'Lemlist' },
-      { name: 'Smartlead' },
-      { name: 'ocean.io' },
       { name: 'NeverBounce' },
+    ],
+  },
+  {
+    title: 'Email sequencers',
+    blurb: 'Where the outbound actually gets sent and managed.',
+    tools: [
+      { name: 'Lemlist' },
+      { name: 'Instantly.ai' },
+      { name: 'Smartlead' },
     ],
   },
   {
     title: 'Data collection',
     blurb: 'Pulling data in from the messy real world.',
-    tools: [{ name: 'Selenium', logo: 'selenium' }],
+    tools: [{ name: 'Selenium', logo: 'selenium' }, { name: 'Apify' }],
   },
 ];
