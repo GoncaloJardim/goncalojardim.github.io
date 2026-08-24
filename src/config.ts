@@ -2,7 +2,7 @@ export const site = {
   name: 'Gonçalo Jardim',
   tagline: 'GTM Data Scientist / Engineer',
   valueProp:
-    "That's the sharp end of it. Underneath sits the whole pipeline: the models that prioritise your market, the enrichment engine that finds and validates the people to contact, and the outbound infrastructure that actually works them, without anyone fat-fingering a send. All on a modern data stack (Python, Snowflake, dbt, n8n).",
+    "Scoring models, prospecting and enrichment automation, and outbound infrastructure, built from scratch and driving real numbers: 5x outbound volume, $1.5M+ in quarterly pipeline, and email bounce down from 8% to under 3%. If your GTM motion still runs on gut feel and manual lists, that's what I fix.",
   email: 'goncalodajardim@gmail.com',
   calendly: 'https://calendly.com/goncalojardim/30min',
   github: 'https://github.com/GoncaloJardim',

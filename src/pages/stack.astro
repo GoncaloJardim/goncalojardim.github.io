@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, withBase } from '../config';
+import { stack } from '../data/stack';
+---
+<Base title={`Tech stack · ${site.name}`} description="The tools Gonçalo builds with across the data, ML and GTM stack.">
+  <main class="wrap section">
+    <span class="eyebrow">{site.tagline}</span>
+    <h1 style="font-size:40px">Tech stack.</h1>
+    <p class="lead">The tools I actually build with, day to day, from the warehouse through to the go-to-market motion. Grouped by where they sit in the workflow.</p>
+
+    {stack.map((cat) => (
+      <section class="cat">
+        <div class="cat-head">
+          <h2>{cat.title}</h2>
+          <p>{cat.blurb}</p>
+        </div>
+        <div class="tools">
+          {cat.tools.map((tool) => (
+            <div class="tool">
+              {tool.logo ? (
+                <img src={withBase(`logos/${tool.logo}.svg`)} alt={`${tool.name} logo`} width="30" height="30" loading="lazy" />
+              ) : (
+                <span class="glyph" aria-hidden="true">{tool.name.slice(0, 2)}</span>
+              )}
+              <span class="name">{tool.name}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p style="margin-top:40px"><a class="btn" href={site.calendly} target="_blank" rel="noopener">Book a 30-min call →</a></p>
+  </main>
+</Base>
+<style>
+  .lead{font-size:19px;color:var(--muted);max-width:680px}
+  .cat{margin-top:40px}
+  .cat-head h2{font-size:20px;margin:0 0 2px}
+  .cat-head p{margin:0 0 16px;font-size:14px;color:var(--muted)}
+  .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .tool{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;
+    padding:12px 14px;background:#fff;transition:.16s}
+  .tool:hover{border-color:var(--accent);box-shadow:0 6px 18px rgba(11,16,32,.06)}
+  .tool img{flex:0 0 auto;object-fit:contain}
+  .tool .glyph{flex:0 0 auto;width:30px;height:30px;border-radius:7px;background:var(--soft);
+    border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:700;color:var(--muted);text-transform:lowercase}
+  .tool .name{font-size:14px;font-weight:550;letter-spacing:-.01em}
+  @media (max-width:760px){ .tools{grid-template-columns:1fr 1fr} }
+</style>
