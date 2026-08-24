@@ -46,7 +46,7 @@ export default function Diagram({ spec, height = 460 }: { spec: DiagramSpec; hei
       </div>
       <div className="gtm-detail">
         {selected ? (
-          <p><strong>{selected.label}</strong> — {selected.detail}</p>
+          <p><strong>{selected.label}</strong>: {selected.detail}</p>
         ) : (
           <p className="muted">Click any node to see what happens at that stage.</p>
         )}

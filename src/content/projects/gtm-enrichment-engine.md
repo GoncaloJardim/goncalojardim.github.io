@@ -38,20 +38,20 @@ diagram:
 
 ## The problem
 
-The account and contact database was thin and going stale, and enrichment was a manual, tool-by-tool slog spread across disconnected systems — which meant data silos and inconsistent quality on top of the wasted effort. Reps were losing roughly half their time to manual research instead of selling, and outbound volume was capped by how fast a person could build a one-off list by hand.
+The account and contact database was thin and going stale, and enrichment was a manual, tool-by-tool slog spread across disconnected systems, which meant data silos and inconsistent quality on top of the wasted effort. Reps were losing roughly half their time to manual research instead of selling, and outbound volume was capped by how fast a person could build a one-off list by hand.
 
 ## What I built
 
-I owned this one end to end — the whole architecture from prioritisation through prospecting, enrichment, validation and activation, orchestrated in n8n. The pipeline chains an ML fit-score model, LLM-based look-alike prospecting, and the centrepiece: a fan-out enrichment waterfall that hits multiple contact-data providers in parallel instead of betting everything on one vendor's coverage.
+I owned this one end to end: the whole architecture from prioritisation through prospecting, enrichment, validation and activation, orchestrated in n8n. The pipeline chains an ML fit-score model, LLM-based look-alike prospecting, and the centrepiece: a fan-out enrichment waterfall that hits multiple contact-data providers in parallel instead of betting everything on one vendor's coverage.
 
 I modelled and normalised the enriched data in Snowflake via dbt, with dedup logic and a 4-6 month refresh cadence so the warehouse doesn't quietly go stale again. The validation stage routes every record into valid, catch-all or invalid buckets, and I defined the success metrics and reporting used to keep Data, Marketing and RevOps pointing the same way.
 
 ## How it works
 
-It starts with account prioritization: existing accounts are scored, and high-fit ones become seeds. Those seeds feed a look-alike prospecting step that uses LLM search APIs and look-alike matching to surface net-new companies that resemble the best existing accounts. From there, the real showpiece: an enrichment waterfall that fans each prospect out to four providers in parallel — Apollo.io and ZoomInfo for mass-scale coverage, FullEnrich for phone numbers and higher-quality matches, and ReverseContact for personal-to-business email resolution and event-lead lookups.
+It starts with account prioritization: existing accounts are scored, and high-fit ones become seeds. Those seeds feed a look-alike prospecting step that uses LLM search APIs and look-alike matching to surface net-new companies that resemble the best existing accounts. From there, the real showpiece: an enrichment waterfall that fans each prospect out to four providers in parallel. Apollo.io and ZoomInfo handle mass-scale coverage, FullEnrich adds phone numbers and higher-quality matches, and ReverseContact resolves personal-to-business email and event-lead lookups.
 
-Every enriched contact then passes through email validation, which branches results into valid, catch-all (queued for re-verification), or invalid (suppressed outright). Everything that survives lands in the "warehouse of truth" — deduplicated, validated, and refreshed on a 4-6 month cycle in Snowflake via dbt — which in turn feeds activation: outbound campaigns, events, partnerships and demand-gen reporting.
+Every enriched contact then passes through email validation, which branches results into valid, catch-all (queued for re-verification), or invalid (suppressed outright). Everything that survives lands in the "warehouse of truth" (deduplicated, validated, and refreshed on a 4-6 month cycle in Snowflake via dbt), which in turn feeds activation: outbound campaigns, events, partnerships and demand-gen reporting.
 
 ## Impact
 
-The warehouse expanded roughly 5x, growing from tens of thousands of records to the low hundreds of thousands. Email accuracy landed around 97%, with bounce rates near 3%. The multi-provider waterfall and automation reclaimed an estimated 40-50% of the sales time previously lost to manual research, and a single production run of the pipeline produced around 1,800 freshly enriched contacts — decoupling list-building capacity from manual effort entirely.
+The warehouse expanded roughly 5x, growing from tens of thousands of records to the low hundreds of thousands. Email accuracy landed around 97%, with bounce rates near 3%. The multi-provider waterfall and automation reclaimed an estimated 40-50% of the sales time previously lost to manual research, and a single production run of the pipeline produced around 1,800 freshly enriched contacts, decoupling list-building capacity from manual effort entirely.

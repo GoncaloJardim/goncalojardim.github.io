@@ -1,6 +1,6 @@
 ---
 title: "Account Fit Score"
-pitch: "A model that scores every company in your market on how likely it is to become a real opportunity — so the team works the few hundred that matter, not the tens of thousands that don't."
+pitch: "A model that scores every company in your market on how likely it is to become a real opportunity, so the team works the few hundred that matter, not the tens of thousands that don't."
 order: 1
 featured: true
 tech: ["Python", "scikit-learn", "pandas", "Snowflake", "dbt", "Superset"]
@@ -31,7 +31,7 @@ diagram:
 
 We had tens of thousands of accounts in the addressable market and a sales team that can only really work a few hundred of them at a time. So the question was never "is this a good account?". It was "out of everything out there, which few hundred do we spend our hours on this quarter?"
 
-The old answer was a point-based fit score built on crude firmographics — headcount, revenue, industry. The problem was that it barely predicted anything. Its correlation to closed-won was about 0.03, basically noise, and its "best" tier converted at roughly the same rate as a random account. So reps burned hours on accounts that looked fine on a spreadsheet and never closed, while genuinely good-fit ones sat untouched because nothing surfaced them.
+The old answer was a point-based fit score built on crude firmographics: headcount, revenue, industry. The problem was that it barely predicted anything. Its correlation to closed-won was about 0.03, basically noise, and its "best" tier converted at roughly the same rate as a random account. So reps burned hours on accounts that looked fine on a spreadsheet and never closed, while genuinely good-fit ones sat untouched because nothing surfaced them.
 
 That's expensive for every GTM team, not just sales:
 
@@ -44,20 +44,20 @@ Prioritising the TAM well is the one decision that quietly sets the ceiling on e
 
 ## What I built
 
-I replaced the gut-feel score with one that actually learns from what closed — an end-to-end model that predicts each account's probability of turning into a qualified opportunity, trained on historical CRM outcomes.
+I replaced the gut-feel score with one that actually learns from what closed: an end-to-end model that predicts each account's probability of turning into a qualified opportunity, trained on historical CRM outcomes.
 
-Two decisions shaped it. First, I spent most of the effort on the features rather than the algorithm: industry, data warehouse, cloud provider, and roughly 40 individual technologies collapsed into technographic groups, plus prior opportunity history and product-usage signals. That's where the real signal lived. Second, I deliberately chose an interpretable model — plain logistic regression — so I could translate the coefficients into "this trait raises fit / this one lowers it" typologies in plain English. On a GTM team, a score nobody can explain is a score nobody trusts, and a score nobody trusts doesn't get used.
+Two decisions shaped it. First, I spent most of the effort on the features rather than the algorithm: industry, data warehouse, cloud provider, and roughly 40 individual technologies collapsed into technographic groups, plus prior opportunity history and product-usage signals. That's where the real signal lived. Second, I deliberately chose an interpretable model (plain logistic regression) so I could translate the coefficients into "this trait raises fit / this one lowers it" typologies in plain English. On a GTM team, a score nobody can explain is a score nobody trusts, and a score nobody trusts doesn't get used.
 
-Then I scored the entire addressable market — tens of thousands of accounts — bucketed everything from Very Low to Very High, and generated a human-readable trait summary for every single account so a rep could see *why* it landed where it did. I built the Superset dashboard people actually explore it in, and I validated the whole thing against the legacy score and against real outcomes before asking anyone to rely on it.
+Then I scored the entire addressable market (tens of thousands of accounts), bucketed everything from Very Low to Very High, and generated a human-readable trait summary for every single account so a rep could see *why* it landed where it did. I built the Superset dashboard people actually explore it in, and I validated the whole thing against the legacy score and against real outcomes before asking anyone to rely on it.
 
 ## How it works
 
-The pipeline starts from historical CRM data — accounts, opportunities, SQL outcomes, and the firmographic and technographic attributes attached to them. That gets assembled into a single modelling table in Snowflake, then run through feature engineering to encode, scale and group the raw attributes into the signal typologies the model consumes.
+The pipeline starts from historical CRM data: accounts, opportunities, SQL outcomes, and the firmographic and technographic attributes attached to them. That gets assembled into a single modelling table in Snowflake, then run through feature engineering to encode, scale and group the raw attributes into the signal typologies the model consumes.
 
 From there a logistic regression trains on a stratified split with cross-validated tuning, optimising for F1 rather than raw accuracy since the classes are heavily imbalanced (most accounts never convert, so accuracy alone would just reward predicting "no"). The trained model then scores every account in the market: a 0-100% number, a bucket, and a generated trait summary. Scores and buckets write back into the warehouse and onto CRM fields so they drop straight into the prioritisation workflows the team already runs, and the same data feeds the self-serve dashboard.
 
 ## Impact
 
-The top decile of scored accounts converted to opportunities at roughly 10x the rate of the legacy model's top tier. The top fit bucket alone hit a 45-50% SQL rate and around a 30% opportunity rate, while the mid-tiers dropped to low single digits and the bottom buckets fell under 0.3% — which is what finally gave the team the confidence to deliberately *ignore* a large chunk of the market instead of pretending to work all of it.
+The top decile of scored accounts converted to opportunities at roughly 10x the rate of the legacy model's top tier. The top fit bucket alone hit a 45-50% SQL rate and around a 30% opportunity rate, while the mid-tiers dropped to low single digits and the bottom buckets fell under 0.3%. That's what finally gave the team the confidence to deliberately *ignore* a large chunk of the market instead of pretending to work all of it.
 
-The legacy score offered almost no signal (~0.03 correlation to outcomes). This one produced a clean, monotonic conversion gradient from bottom bucket to top — the kind of thing sales, marketing and RevOps could all point at and agree on.
+The legacy score offered almost no signal (~0.03 correlation to outcomes). This one produced a clean, monotonic conversion gradient from bottom bucket to top, the kind of thing sales, marketing and RevOps could all point at and agree on.
