@@ -18,12 +18,18 @@ import { stack } from '../data/stack';
         <div class="tools">
           {cat.tools.map((tool) => (
             <div class="tool">
-              {tool.logo ? (
-                <img src={withBase(`logos/${tool.logo}.svg`)} alt={`${tool.name} logo`} width="30" height="30" loading="lazy" />
+              {tool.logo && tool.lockup ? (
+                <img class="lockup" src={withBase(`logos/${tool.logo}`)} alt={`${tool.name} logo`} loading="lazy" />
               ) : (
-                <span class="glyph" aria-hidden="true">{tool.name.slice(0, 2)}</span>
+                <>
+                  {tool.logo ? (
+                    <img src={withBase(`logos/${tool.logo}`)} alt={`${tool.name} logo`} width="30" height="30" loading="lazy" />
+                  ) : (
+                    <span class="glyph" aria-hidden="true">{tool.name.slice(0, 2)}</span>
+                  )}
+                  <span class="name">{tool.name}</span>
+                </>
               )}
-              <span class="name">{tool.name}</span>
             </div>
           ))}
         </div>
@@ -43,6 +49,7 @@ import { stack } from '../data/stack';
     padding:12px 14px;background:#fff;transition:.16s}
   .tool:hover{border-color:var(--accent);box-shadow:0 6px 18px rgba(11,16,32,.06)}
   .tool img{flex:0 0 auto;object-fit:contain}
+  .tool img.lockup{height:24px;width:auto;max-width:120px}
   .tool .glyph{flex:0 0 auto;width:30px;height:30px;border-radius:7px;background:var(--soft);
     border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
     font-size:12px;font-weight:700;color:var(--muted);text-transform:lowercase}
