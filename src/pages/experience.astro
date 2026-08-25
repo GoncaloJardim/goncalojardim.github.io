@@ -2,6 +2,18 @@
 import Base from '../layouts/Base.astro';
 import { site, withBase } from '../config';
 import { experience, education } from '../data/experience';
+
+// Monogram initials for entries without a logo (first two letters of the name).
+function initials(name: string): string {
+  const first = name.replace(/[^A-Za-z0-9 ]/g, ' ').trim().split(/\s+/)[0] ?? '';
+  return first.slice(0, 2).toUpperCase();
+}
+// Split a bullet's text around the linked phrase.
+function linkParts(text: string, phrase: string): [string, string, string] {
+  const i = text.indexOf(phrase);
+  if (i < 0) return [text, '', ''];
+  return [text.slice(0, i), phrase, text.slice(i + phrase.length)];
+}
 ---
 <Base title={`Experience · ${site.name}`} description="Gonçalo Jardim's professional experience across GTM data science, engineering and teaching.">
   <main class="wrap section">
@@ -9,44 +21,63 @@ import { experience, education } from '../data/experience';
       <div>
         <span class="eyebrow">{site.tagline}</span>
         <h1 style="font-size:40px">Experience.</h1>
-        <p class="lead">Where I've worked and what I shipped. The Snowplow projects link straight to their case studies.</p>
+        <p class="lead">Where I've worked and what I shipped. The Snowplow highlights link straight into their case studies.</p>
       </div>
       <a class="btn" href={withBase('resume.pdf')} target="_blank" rel="noopener">Download résumé (PDF) ↓</a>
     </div>
 
     {experience.map((group) => (
       <section class="group">
-        <div class="label">{group.heading}</div>
-        {group.roles.map((role) => (
-          <div class="role">
-            <div class="role-head">
-              <h2>{role.company}</h2>
-              <span class="period">{role.period}</span>
-            </div>
-            <div class="role-title">{role.title}</div>
-            <ul>
-              {role.bullets.map((b) => (
-                <li>
-                  {b.text}
-                  {b.caseStudy && (
-                    <> <a class="cs" href={withBase(`projects/${b.caseStudy}`)}>Read the case study →</a></>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <h2 class="group-title">{group.heading}</h2>
+        <div class="list">
+          {group.roles.map((role) => (
+            <article class="entry">
+              <div class="avatar">
+                {role.logo
+                  ? <img src={withBase(`logos/${role.logo}`)} alt={`${role.company} logo`} loading="lazy" />
+                  : <span class="mono">{initials(role.company)}</span>}
+              </div>
+              <div class="body">
+                <h3 class="title">{role.title}</h3>
+                <div class="company">{role.company}</div>
+                <div class="period">{role.period}</div>
+                <ul>
+                  {role.bullets.map((b) => {
+                    const parts = b.link ? linkParts(b.text, b.link.text) : null;
+                    return (
+                      <li>
+                        {parts && parts[1]
+                          ? <>{parts[0]}<a href={withBase(`projects/${b.link!.caseStudy}`)}>{parts[1]}</a>{parts[2]}</>
+                          : b.text}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
     ))}
 
     <section class="group">
-      <div class="label">Education</div>
-      {education.map((e) => (
-        <div class="edu">
-          <div class="edu-main"><strong>{e.school}</strong> <span class="edu-q">{e.qualification}</span></div>
-          <span class="period">{e.period}</span>
-        </div>
-      ))}
+      <h2 class="group-title">Education</h2>
+      <div class="list">
+        {education.map((e) => (
+          <article class="entry">
+            <div class="avatar">
+              {e.logo
+                ? <img src={withBase(`logos/${e.logo}`)} alt={`${e.school} logo`} loading="lazy" />
+                : <span class="mono">{initials(e.school)}</span>}
+            </div>
+            <div class="body">
+              <h3 class="title">{e.school}</h3>
+              <div class="company">{e.qualification}</div>
+              <div class="period">{e.period}</div>
+            </div>
+          </article>
+        ))}
+      </div>
     </section>
 
     <p style="margin-top:40px"><a class="btn" href={site.calendly} target="_blank" rel="noopener">Book a 30-min call →</a></p>
@@ -55,19 +86,20 @@ import { experience, education } from '../data/experience';
 <style>
   .head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
   .lead{font-size:19px;color:var(--muted);max-width:620px}
-  .group{margin-top:44px}
-  .group .label{margin-bottom:18px}
-  .role{border-left:2px solid var(--line);padding:0 0 4px 20px;margin-bottom:28px}
-  .role-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  .role-head h2{font-size:19px;margin:0}
-  .role .period{font-size:13px;color:var(--muted);white-space:nowrap}
-  .role-title{font-size:14px;font-weight:600;color:var(--accent);margin:2px 0 10px}
-  .role ul{margin:0;padding-left:18px}
-  .role li{font-size:14.5px;color:#26304a;line-height:1.6;margin-bottom:8px}
-  .cs{font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap}
-  .edu{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;
-    padding:12px 0;border-bottom:1px solid var(--line)}
-  .edu-main{font-size:14.5px}
-  .edu-q{color:var(--muted)}
+  .group{margin-top:40px}
+  .group-title{font-size:22px;margin:0 0 8px}
+  .list{border-top:1px solid var(--line)}
+  .entry{display:flex;gap:16px;padding:22px 0;border-bottom:1px solid var(--line)}
+  .avatar{flex:0 0 auto;width:48px;height:48px;border-radius:10px;overflow:hidden;
+    border:1px solid var(--line);background:var(--soft);display:flex;align-items:center;justify-content:center}
+  .avatar img{width:100%;height:100%;object-fit:contain;padding:6px}
+  .avatar .mono{font-size:15px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+  .body{flex:1;min-width:0}
+  .title{font-size:16px;font-weight:650;margin:0;letter-spacing:-.01em}
+  .company{font-size:14.5px;color:var(--ink);margin-top:1px}
+  .period{font-size:13px;color:var(--muted);margin-top:1px}
+  .body ul{margin:12px 0 0;padding-left:18px}
+  .body li{font-size:14.5px;color:#26304a;line-height:1.6;margin-bottom:7px}
+  .body li a{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:2px}
   @media (max-width:760px){ .head{flex-direction:column} }
 </style>
