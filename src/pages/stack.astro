@@ -44,7 +44,8 @@ import { stack } from '../data/stack';
   .cat{margin-top:40px}
   .cat-head h2{font-size:20px;margin:0 0 2px}
   .cat-head p{margin:0 0 16px;font-size:14px;color:var(--muted)}
-  .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .tools{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+  @media (max-width:900px){ .tools{grid-template-columns:repeat(3,minmax(0,1fr))} }
   .tool{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;
     padding:12px 14px;background:#fff;transition:.16s}
   .tool:hover{border-color:var(--accent);box-shadow:0 6px 18px rgba(11,16,32,.06)}
