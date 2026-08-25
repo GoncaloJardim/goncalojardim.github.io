@@ -26,7 +26,7 @@ export const stack: StackCategory[] = [
       { name: 'Snowflake', logo: 'snowflake.svg' },
       { name: 'BigQuery', logo: 'bigquery.svg' },
       { name: 'Databricks', logo: 'databricks.svg' },
-      { name: 'dbt' },
+      { name: 'dbt', logo: 'dbt.png' },
       { name: 'Google Cloud', logo: 'gcp.svg' },
     ],
   },
@@ -38,7 +38,7 @@ export const stack: StackCategory[] = [
       { name: 'Prefect', logo: 'prefect.svg' },
       { name: 'n8n', logo: 'n8n.svg' },
       { name: 'Docker', logo: 'docker.svg' },
-      { name: 'Cargo' },
+      { name: 'Cargo', logo: 'cargo.png' },
     ],
   },
   {
@@ -56,8 +56,8 @@ export const stack: StackCategory[] = [
     title: 'Visualisation & BI',
     blurb: 'Getting results in front of stakeholders.',
     tools: [
-      { name: 'Tableau' },
-      { name: 'Power BI' },
+      { name: 'Tableau', logo: 'tableau.png' },
+      { name: 'Power BI', logo: 'powerbi.png' },
       { name: 'Metabase', logo: 'metabase.svg' },
       { name: 'Preset' },
       { name: 'Sisense' },
