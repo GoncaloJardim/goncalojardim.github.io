@@ -26,6 +26,7 @@ export const experience: RoleGroup[] = [
         company: 'Snowplow',
         title: 'GTM Data Scientist / Engineer',
         period: 'Jun 2025 - Present',
+        logo: 'snowplow.png',
         bullets: [
           { text: 'Built the GTM engineering function and engine from scratch.' },
           {
@@ -50,6 +51,7 @@ export const experience: RoleGroup[] = [
         company: 'Gorgias',
         title: 'GTM Data Scientist',
         period: 'Aug 2023 - May 2025',
+        logo: 'gorgias.png',
         bullets: [
           { text: 'Built lead intent and account fit scoring models used company-wide to shape GTM strategy.' },
           { text: 'Fully automated the outbound motion from company prospecting to AI copy to lead routing: up to 700K+ leads reached per quarter, generating $1.5M+ in quarterly pipeline.' },
@@ -61,19 +63,12 @@ export const experience: RoleGroup[] = [
         company: 'DareData',
         title: 'Data Analyst to Data Scientist',
         period: 'Feb 2022 - Aug 2023',
+        logo: 'daredata.png',
         bullets: [
           { text: "Advanced-analytics data scientist for the world's second-largest beer producer." },
           { text: "Built a route-optimisation model (Google OR-Tools) that increased account managers' client visits by +40% nationally." },
           { text: 'Shipped a price recommender that strengthened negotiation power, profit margin and quota prediction.' },
           { text: 'Contributed to a customer-segmentation model informing sales and marketing strategy, and an internal revenue/volume/cash-flow projection tool adopted by product owners and upper management.' },
-        ],
-      },
-      {
-        company: 'Leroy Merlin',
-        title: 'Business Manager',
-        period: 'Oct 2019 - Aug 2021',
-        bullets: [
-          { text: 'Owned B2B and B2C strategy and P&L for an area doing 5.5M EUR/year in sales, overseeing everything from logistics to sales. Managed a team of 12.' },
         ],
       },
     ],
@@ -85,6 +80,7 @@ export const experience: RoleGroup[] = [
         company: 'Analytics Accelerator',
         title: 'Mentor / Teacher',
         period: 'May 2026 - Present',
+        logo: 'analytics-accelerator.png',
         bullets: [
           { text: 'Mentoring people transitioning into data analyst roles or upskilling. Average time to land a new job: 2.5 months; average salary increase: 32%.' },
         ],
@@ -93,6 +89,7 @@ export const experience: RoleGroup[] = [
         company: 'Ironhack',
         title: 'Lead Teacher, Data Analytics',
         period: 'Feb 2022 - Jun 2025',
+        logo: 'ironhack.png',
         bullets: [
           { text: 'Mentored 190+ students across 8 cohorts in Python, SQL, data manipulation, visualisation, statistics and machine learning. Started as a Teaching Assistant and was promoted to Lead Teacher after 1.5 years.' },
         ],
@@ -109,9 +106,9 @@ export interface Education {
 }
 
 export const education: Education[] = [
-  { school: 'ISEG, Lisbon School of Economics and Management', qualification: "Master's, Industrial Management and Strategy", period: '2018 - 2021' },
-  { school: 'Instituto Superior Técnico (IST)', qualification: "Bachelor's, Engineering", period: '2013 - 2018' },
-  { school: 'Ironhack', qualification: 'Data Analytics Bootcamp', period: '2021' },
-  { school: 'Lisbon Data Science Academy (LDSA)', qualification: 'Data Science Course', period: '2022' },
-  { school: 'MLOps Zoomcamp', qualification: 'Model deployment and orchestration (MLflow, Prefect)', period: '2023' },
+  { school: 'ISEG, Lisbon School of Economics and Management', qualification: "Master's, Industrial Management and Strategy", period: '2018 - 2021', logo: 'iseg.png' },
+  { school: 'Instituto Superior Técnico (IST)', qualification: "Bachelor's, Engineering", period: '2013 - 2018', logo: 'ist.png' },
+  { school: 'Ironhack', qualification: 'Data Analytics Bootcamp', period: '2021', logo: 'ironhack.png' },
+  { school: 'Lisbon Data Science Academy (LDSA)', qualification: 'Data Science Course', period: '2022', logo: 'ldsa.png' },
+  { school: 'DataTalks.Club', qualification: 'MLOps Zoomcamp (MLflow, Prefect)', period: '2023', logo: 'dtc.png' },
 ];
