@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, withBase } from '../config';
+import { experience, education } from '../data/experience';
+---
+<Base title={`Experience · ${site.name}`} description="Gonçalo Jardim's professional experience across GTM data science, engineering and teaching.">
+  <main class="wrap section">
+    <div class="head">
+      <div>
+        <span class="eyebrow">{site.tagline}</span>
+        <h1 style="font-size:40px">Experience.</h1>
+        <p class="lead">Where I've worked and what I shipped. The Snowplow projects link straight to their case studies.</p>
+      </div>
+      <a class="btn" href={withBase('resume.pdf')} target="_blank" rel="noopener">Download résumé (PDF) ↓</a>
+    </div>
+
+    {experience.map((group) => (
+      <section class="group">
+        <div class="label">{group.heading}</div>
+        {group.roles.map((role) => (
+          <div class="role">
+            <div class="role-head">
+              <h2>{role.company}</h2>
+              <span class="period">{role.period}</span>
+            </div>
+            <div class="role-title">{role.title}</div>
+            <ul>
+              {role.bullets.map((b) => (
+                <li>
+                  {b.text}
+                  {b.caseStudy && (
+                    <> <a class="cs" href={withBase(`projects/${b.caseStudy}`)}>Read the case study →</a></>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+    ))}
+
+    <section class="group">
+      <div class="label">Education</div>
+      {education.map((e) => (
+        <div class="edu">
+          <div class="edu-main"><strong>{e.school}</strong> <span class="edu-q">{e.qualification}</span></div>
+          <span class="period">{e.period}</span>
+        </div>
+      ))}
+    </section>
+
+    <p style="margin-top:40px"><a class="btn" href={site.calendly} target="_blank" rel="noopener">Book a 30-min call →</a></p>
+  </main>
+</Base>
+<style>
+  .head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+  .lead{font-size:19px;color:var(--muted);max-width:620px}
+  .group{margin-top:44px}
+  .group .label{margin-bottom:18px}
+  .role{border-left:2px solid var(--line);padding:0 0 4px 20px;margin-bottom:28px}
+  .role-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .role-head h2{font-size:19px;margin:0}
+  .role .period{font-size:13px;color:var(--muted);white-space:nowrap}
+  .role-title{font-size:14px;font-weight:600;color:var(--accent);margin:2px 0 10px}
+  .role ul{margin:0;padding-left:18px}
+  .role li{font-size:14.5px;color:#26304a;line-height:1.6;margin-bottom:8px}
+  .cs{font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap}
+  .edu{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;
+    padding:12px 0;border-bottom:1px solid var(--line)}
+  .edu-main{font-size:14.5px}
+  .edu-q{color:var(--muted)}
+  @media (max-width:760px){ .head{flex-direction:column} }
+</style>
