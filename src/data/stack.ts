@@ -60,7 +60,7 @@ export const stack: StackCategory[] = [
       { name: 'Power BI', logo: 'powerbi.png' },
       { name: 'Metabase', logo: 'metabase.svg' },
       { name: 'Preset', logo: 'preset.png' },
-      { name: 'Matplotlib', logo: 'matplotlib.png', lockup: true },
+      { name: 'Matplotlib', logo: 'matplotlib.png' },
       { name: 'Sisense', logo: 'sisense.png' },
       { name: 'Plotly', logo: 'plotly.svg' },
     ],
@@ -71,7 +71,7 @@ export const stack: StackCategory[] = [
     tools: [
       { name: 'LangFuse', logo: 'langfuse.png' },
       { name: 'LiteLLM', logo: 'litellm.png' },
-      { name: 'PromptLayer', logo: 'promptlayer.png', lockup: true },
+      { name: 'PromptLayer', logo: 'promptlayer.png' },
       { name: 'exa.ai', logo: 'exa.png' },
       { name: 'parallel.ai', logo: 'parallel.png' },
     ],
@@ -81,7 +81,7 @@ export const stack: StackCategory[] = [
     blurb: 'The systems the go-to-market motion runs on.',
     tools: [
       { name: 'Salesforce', logo: 'salesforce.png' },
-      { name: 'Apollo.io' },
+      { name: 'Apollo.io', logo: 'apollo.png' },
       { name: 'ZoomInfo', logo: 'zoominfo.png' },
       { name: 'Enrichley', logo: 'enrichley.png' },
     ],
