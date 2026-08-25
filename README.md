@@ -1,126 +1,26 @@
-# Goncalo Jardim's Portfolio
+# Gonçalo Jardim
 
-A static portfolio site built with [Astro](https://astro.build), showcasing projects, technical expertise, and professional work.
+**GTM Data Scientist / Engineer.** I build the data systems that decide who a sales team should spend time on, then go find, enrich and reach those accounts. End to end, on a modern data stack (Python, Snowflake, dbt, n8n).
 
-## Getting Started
+🔗 **Live portfolio: https://goncalojardim.github.io**
 
-### Prerequisites
-- Node.js >= 20.3
-- npm
+I sit between the data team and the sales floor and build the machinery that connects them. Most of my work starts as a scrappy question from a rep ("why are we even working these accounts?") and turns into a model, a pipeline, or an n8n workflow that answers it for the whole team. I like the problems where the data science has to survive contact with a quota.
 
-### Development
+## What I do
 
-Start the development server:
-```bash
-npm run dev
-```
+- **Predictive scoring:** fit, intent and engagement models used company-wide for lead routing and prioritisation. Top-decile accounts converted roughly 10x better than the legacy score.
+- **Prospecting & enrichment automation:** an AI agent that finds net-new look-alike accounts (+30% tracked companies) and a multi-provider enrichment and validation engine that cut email bounce from 8% to under 3%.
+- **Outbound infrastructure:** full-funnel automation from prospecting to AI copy to lead routing, with guardrails so nothing sends by accident. 5x outbound volume, 700K+ leads per quarter, $1.5M+ in quarterly pipeline.
+- **Experimentation & measurement:** A/B testing frameworks (inferential and Bayesian) that lifted pipeline +15%.
 
-The site will be available at `http://localhost:3000/portfolio` (base path applied locally).
+I also teach. I've mentored 190+ people moving into data analytics and data science.
 
-### Build
+## Find me
 
-Build the site for production:
-```bash
-npm run build
-```
+- Portfolio: https://goncalojardim.github.io
+- LinkedIn: https://www.linkedin.com/in/goncalo-jardim/
+- Email: goncalodajardim@gmail.com
 
-Output is generated in the `dist/` directory.
+## About this repo
 
-### Preview
-
-Preview the production build locally:
-```bash
-npm run preview
-```
-
-### Testing
-
-Run tests:
-```bash
-npm run test
-```
-
-Type checking:
-```bash
-npm run check
-```
-
-## Adding a Project
-
-Projects are stored as Markdown files in `src/content/projects/`.
-
-Create a new file `src/content/projects/<slug>.md` with the following structure:
-
-```markdown
----
-title: "Project Name"
-pitch: "Short description of the project"
-order: 1
-featured: true
-tech: ["React", "TypeScript", "Astro"]
-repo: "https://github.com/user/repo"
-metrics:
-  - value: "50M"
-    label: "Events/day"
-  - value: "12"
-    label: "Team members"
-diagram:
-  nodes:
-    - id: "source"
-      label: "Data Source"
-      tech: "API"
-      group: "source"
-      detail: "External data source"
-    - id: "processor"
-      label: "Processor"
-      type: "fanout"
-      detail: "Processes incoming data"
-    - id: "sink"
-      label: "Storage"
-      group: "sink"
-      detail: "Database or data warehouse"
-  edges:
-    - from: "source"
-      to: "processor"
-    - from: "processor"
-      to: "sink"
----
-
-Project description and details in Markdown format.
-```
-
-**Schema:**
-- `title` (required): Project name
-- `pitch` (required): Short pitch or description
-- `order` (required): Display order (number)
-- `featured` (optional): Boolean, defaults to false
-- `tech` (required): Array of technologies used
-- `repo` (optional): GitHub repo URL or null
-- `metrics` (required): Array of metric objects with `value` and `label`
-- `diagram` (required): Flow diagram with `nodes` and `edges`
-
-## GitHub Pages base path
-
-`astro.config.mjs` defaults to a **project site** (repo named `portfolio`):
-`site: 'https://goncalojardim.github.io'`, `base: '/portfolio'`.
-
-- **User site** (repo `GoncaloJardim.github.io`): set `base: '/'` and
-  `site: 'https://goncalojardim.github.io'`.
-- **Custom domain**: set `site: 'https://yourdomain.com'`, `base: '/'`, and add a
-  `public/CNAME` file containing the domain.
-
-After pushing to `main`/`master`, enable Pages in repo Settings → Pages → Source: "GitHub Actions".
-
-## Deployment
-
-This site deploys automatically to GitHub Pages on push to `main`/`master` via the GitHub Actions workflow in `.github/workflows/deploy.yml`.
-
-To enable:
-1. Push to `main`/`master` branch
-2. Go to repo Settings → Pages
-3. Select "GitHub Actions" as the source
-4. The site will deploy at `https://goncalojardim.github.io/portfolio`
-
-## License
-
-ISC
+This is the source for my portfolio, a static [Astro](https://astro.build) site with interactive React Flow architecture diagrams, deployed to GitHub Pages. To run it locally or add a project, see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
