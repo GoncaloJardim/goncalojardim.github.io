@@ -1,14 +1,16 @@
-// Career history for the Experience page. `caseStudy` (a project slug) links a
-// bullet to its case study under /projects/<slug>.
+// Career history for the Experience page (LinkedIn-style rows).
+// `logo` (when set) is a filename in public/logos/; otherwise a monogram avatar is shown.
+// A bullet's `link` embeds a hyperlink on the phrase `link.text` (which must appear in `text`),
+// pointing at that project's case study under /projects/<caseStudy>.
 export interface Bullet {
   text: string;
-  caseStudy?: string;
+  link?: { text: string; caseStudy: string };
 }
 export interface Role {
   company: string;
   title: string;
   period: string;
-  location?: string;
+  logo?: string;
   bullets: Bullet[];
 }
 export interface RoleGroup {
@@ -18,7 +20,7 @@ export interface RoleGroup {
 
 export const experience: RoleGroup[] = [
   {
-    heading: 'Industry',
+    heading: 'Experience',
     roles: [
       {
         company: 'Snowplow',
@@ -26,10 +28,22 @@ export const experience: RoleGroup[] = [
         period: 'Jun 2025 - Present',
         bullets: [
           { text: 'Built the GTM engineering function and engine from scratch.' },
-          { text: 'Shipped an account fit score used company-wide to prioritise the addressable market.', caseStudy: 'account-fit-score' },
-          { text: 'Built account and contact engagement scores that rank accounts by real-time buying intent.', caseStudy: 'account-engagement-score' },
-          { text: 'Automated multi-provider enrichment and net-new account discovery with an AI prospecting agent, adding ~30% more tracked companies and cutting email bounce from 8% to under 3%.', caseStudy: 'gtm-enrichment-engine' },
-          { text: 'Increased outbound volume 5-fold and democratised campaign creation, dropping time-to-market from 3 days to 30 minutes so any GTM operator can launch their own.', caseStudy: 'outbound-campaign-democratization' },
+          {
+            text: 'Shipped an account fit score used company-wide to prioritise the addressable market.',
+            link: { text: 'account fit score', caseStudy: 'account-fit-score' },
+          },
+          {
+            text: 'Built account and contact engagement scores that rank accounts by real-time buying intent.',
+            link: { text: 'account and contact engagement scores', caseStudy: 'account-engagement-score' },
+          },
+          {
+            text: 'Automated multi-provider enrichment and net-new account discovery with an AI prospecting agent, adding ~30% more tracked companies and cutting email bounce from 8% to under 3%.',
+            link: { text: 'multi-provider enrichment', caseStudy: 'gtm-enrichment-engine' },
+          },
+          {
+            text: 'Increased outbound volume 5-fold and democratised campaign creation, dropping time-to-market from 3 days to 30 minutes so any GTM operator can launch their own.',
+            link: { text: 'democratised campaign creation', caseStudy: 'outbound-campaign-democratization' },
+          },
         ],
       },
       {
@@ -91,6 +105,7 @@ export interface Education {
   school: string;
   qualification: string;
   period: string;
+  logo?: string;
 }
 
 export const education: Education[] = [
