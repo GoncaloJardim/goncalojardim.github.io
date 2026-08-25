@@ -48,7 +48,7 @@ export const stack: StackCategory[] = [
       { name: 'scikit-learn', logo: 'scikitlearn.svg' },
       { name: 'pandas', logo: 'pandas.svg' },
       { name: 'NumPy', logo: 'numpy.svg' },
-      { name: 'Google OR-Tools' },
+      { name: 'Google OR-Tools', logo: 'ortools.png', lockup: true },
       { name: 'MLflow', logo: 'mlflow.svg' },
     ],
   },
