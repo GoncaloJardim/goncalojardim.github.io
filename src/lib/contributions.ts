@@ -1,7 +1,8 @@
 export type Day = { date: string; level: number | string; count?: number };
 
-/** Blue scale (0 = empty → 4 = most active), recoded from GitHub's green. */
-export const SCALE = ['#e9edf4', '#d0dbff', '#9cb0ff', '#5f7bf7', '#2c46cf'];
+/** Blue scale (0 = empty → 4 = most active), recoded from GitHub's green.
+ *  Saturated ramp so low-activity days still read clearly against the empty cell. */
+export const SCALE = ['#e9edf4', '#b3c1ff', '#7d97fb', '#4f6cf5', '#2a44c8'];
 
 export const MONTHS = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
