@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import ImpactBand from '../components/ImpactBand.astro';
-import Services from '../components/Services.astro';
+import PipelineDiagram from '../components/PipelineDiagram.astro';
 import EngineStrip from '../components/EngineStrip.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ContributionGraph from '../components/ContributionGraph.tsx';
@@ -13,16 +13,16 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 
 // Curated headline impact (from real GTM work, genericised).
 const headline = [
-  { value: '5x', label: 'outbound volume' },
-  { value: '$1.5M+', label: 'quarterly pipeline generated' },
-  { value: '8%→<3%', label: 'email bounce rate' },
-  { value: '3 days→30 min', label: 'campaign setup time' },
+  { value: 'TAM tracking & enrichment', label: '' },
+  { value: 'Lead scoring & prioritization', label: '' },
+  { value: 'Outbound at scale', label: '' },
+  { value: 'Enable data access', label: '' },
 ];
 ---
 <Base title={`${site.name} · ${site.tagline}`}>
   <Hero />
-  <ImpactBand metrics={headline} />
-  <Services />
+  <ImpactBand metrics={headline} kind="capability" />
+  <PipelineDiagram />
   <EngineStrip />
   <section id="work" class="wrap section">
     <div class="label">Selected work</div>

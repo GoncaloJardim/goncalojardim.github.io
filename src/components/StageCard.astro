@@ -1,0 +1,29 @@
+---
+import type { PipelineStage } from '../data/pipeline';
+interface Props { stage: PipelineStage; index?: number; variant?: 'spine' | 'branch' }
+const { stage, index, variant = 'spine' } = Astro.props;
+const num = index !== undefined ? String(index + 1).padStart(2, '0') : null;
+const count = stage.items.length;
+---
+<details class={`pl-card pl-${variant}`}>
+  <summary>
+    <div class="pl-head">
+      {num && <span class="pl-num">{num}</span>}
+      <div class="pl-headtext">
+        <span class="pl-title">{stage.title}</span>
+        {stage.teaser && <span class="pl-teaser">{stage.teaser}</span>}
+        {!stage.teaser && (
+          <span class="pl-teaser pl-count">{count} {count === 1 ? 'capability' : 'capabilities'}</span>
+        )}
+      </div>
+    </div>
+    <svg class="pl-chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </summary>
+  <ul class="pl-items">
+    {stage.items.map((it) => (
+      <li><strong>{it.label}</strong> — {it.detail}</li>
+    ))}
+  </ul>
+</details>

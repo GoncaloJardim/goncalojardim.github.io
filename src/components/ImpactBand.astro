@@ -1,10 +1,17 @@
 ---
-interface Props { metrics: { value: string; label: string }[] }
-const { metrics } = Astro.props;
+interface Props {
+  metrics: { value: string; label: string }[];
+  kind?: 'metric' | 'capability';
+}
+const { metrics, kind = 'metric' } = Astro.props;
 ---
-<section class="wrap impact">
+<section class={`wrap impact impact-${kind}`}>
   {metrics.map((m) => (
-    <div class="tile"><div class="v">{m.value}</div><div class="l">{m.label}</div></div>
+    <div class="tile">
+      {kind === 'capability' && <span class="dot" aria-hidden="true"></span>}
+      <div class="v">{m.value}</div>
+      {m.label && <div class="l">{m.label}</div>}
+    </div>
   ))}
 </section>
 <style>
@@ -12,5 +19,11 @@ const { metrics } = Astro.props;
   .tile{background:var(--soft);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
   .tile .v{font-size:30px;font-weight:720;letter-spacing:-.02em;color:var(--accent)}
   .tile .l{font-size:13px;color:var(--muted);margin-top:4px}
+
+  /* Capability pillars: phrase-first, no big number. */
+  .impact-capability .tile{display:flex;align-items:center;gap:10px}
+  .impact-capability .tile .v{font-size:15px;font-weight:650;letter-spacing:-.01em;color:var(--ink)}
+  .impact-capability .dot{flex:none;width:8px;height:8px;border-radius:999px;background:var(--accent)}
+
   @media (max-width:760px){ .impact{grid-template-columns:1fr 1fr} }
 </style>
