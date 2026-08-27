@@ -62,3 +62,36 @@ h2{font-size:30px;letter-spacing:-.02em;margin:10px 0 6px;font-weight:700}
 .cg-legend span:first-child{margin-right:2px}
 .cg-legend span:last-child{margin-left:2px}
 .cg-fallback{color:var(--muted);font-size:14px;margin-top:24px}
+
+/* ---- Vertical pipeline diagram (homepage) ---- */
+.pf-wrap{margin-top:28px}
+.pf-canvas{width:100%;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  background:linear-gradient(180deg,#fbfcfe,#fff)}
+.pf-canvas .react-flow__panel{display:none}
+
+/* Node: icon chip + label, n8n-style box */
+.pf-node{display:flex;flex-direction:column;align-items:center;gap:8px;width:168px;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 12px;
+  box-shadow:0 1px 2px rgba(11,16,32,.05),0 8px 20px rgba(11,16,32,.04);
+  cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease,transform .15s ease}
+.pf-node:hover{border-color:#c7d0e6;transform:translateY(-1px)}
+.pf-node .pf-icon{display:flex;align-items:center;justify-content:center;width:38px;height:38px;
+  border-radius:10px;background:var(--accent-soft);color:var(--accent)}
+.pf-node .pf-title{font-size:13.5px;font-weight:650;letter-spacing:-.01em;text-align:center;line-height:1.25}
+.pf-node.is-selected{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft),0 8px 20px rgba(59,91,253,.12)}
+.pf-node.pf-hub{background:var(--accent);border-color:var(--accent)}
+.pf-node.pf-hub .pf-icon{background:rgba(255,255,255,.18);color:#fff}
+.pf-node.pf-hub .pf-title{color:#fff}
+.pf-node.pf-hub.is-selected{box-shadow:0 0 0 3px var(--accent-soft)}
+/* Hide the connection dots; keep the curved edges */
+.pf-node .react-flow__handle{opacity:0;width:6px;height:6px;border:none;min-width:0;min-height:0}
+
+/* Detail panel below the canvas */
+.pf-detail{margin-top:18px;border-top:1px solid var(--line);padding-top:16px;min-height:120px}
+.pf-detail h3{margin:0;font-size:17px;letter-spacing:-.01em}
+.pf-detail .pf-detail-teaser{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.pf-detail ul{margin:12px 0 0;padding-left:0;list-style:none;
+  display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.pf-detail li{font-size:13.5px;line-height:1.55;color:#26304a}
+.pf-detail li strong{color:var(--ink);font-weight:650}
+@media (max-width:760px){ .pf-detail ul{grid-template-columns:1fr} }
