@@ -1,4 +1,4 @@
-export type Day = { date: string; count: number; level: number | string };
+export type Day = { date: string; level: number | string; count?: number };
 
 /** Blue scale (0 = empty → 4 = most active), recoded from GitHub's green. */
 export const SCALE = ['#e9edf4', '#d0dbff', '#9cb0ff', '#5f7bf7', '#2c46cf'];
@@ -18,7 +18,7 @@ export function levelOf(d: Day): number {
     FOURTH_QUARTILE: 4,
   };
   if (typeof d.level === 'string' && d.level in byName) return byName[d.level];
-  const c = d.count;
+  const c = d.count ?? 0;
   if (c <= 0) return 0;
   if (c <= 2) return 1;
   if (c <= 5) return 2;
@@ -61,7 +61,7 @@ export function monthLabels(weeks: (Day | null)[][]): string[] {
   });
 }
 
-/** Total contributions — summed from counts to avoid the API's varying total key. */
+/** Total contributions — summed from counts where present. */
 export function totalContributions(days: Day[]): number {
-  return days.reduce((sum, d) => sum + d.count, 0);
+  return days.reduce((sum, d) => sum + (d.count ?? 0), 0);
 }

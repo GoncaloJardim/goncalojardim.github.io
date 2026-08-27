@@ -1,0 +1,63 @@
+---
+import { SCALE, levelOf, toWeeks, monthLabels } from '../lib/contributions';
+import { fetchContributions } from '../lib/github';
+
+interface Props {
+  username: string;
+}
+const { username } = Astro.props;
+
+// Fetched once at build time, straight from GitHub. Null on any failure.
+const data = await fetchContributions(username);
+const weeks = data ? toWeeks(data.days) : [];
+const labels = monthLabels(weeks);
+---
+
+{data ? (
+  <figure class="cg" role="img" aria-label={`${data.total.toLocaleString()} GitHub contributions in the last year`}>
+    <figcaption class="cg-cap">
+      <strong>{data.total.toLocaleString()}</strong> contributions in the last year
+    </figcaption>
+
+    <div class="cg-scroll">
+      <div class="cg-inner">
+        <div class="cg-months">
+          <span class="cg-days-spacer" aria-hidden="true"></span>
+          <div class="cg-months-grid" style={`grid-template-columns:repeat(${weeks.length},var(--cell))`}>
+            {labels.map((label) => <span class="cg-month">{label}</span>)}
+          </div>
+        </div>
+
+        <div class="cg-body">
+          <div class="cg-days" aria-hidden="true">
+            <span style="grid-row:2">Mon</span>
+            <span style="grid-row:4">Wed</span>
+            <span style="grid-row:6">Fri</span>
+          </div>
+          <div class="cg-cells">
+            {weeks.map((week) =>
+              week.map((d) => (
+                <span
+                  class="cg-cell"
+                  style={`background:${SCALE[d ? levelOf(d) : 0]}`}
+                  title={d ? `${d.count != null ? `${d.count} on ` : ''}${d.date}` : undefined}
+                ></span>
+              )),
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cg-legend" aria-hidden="true">
+      <span>Less</span>
+      {SCALE.map((c) => <span class="cg-cell" style={`background:${c}`}></span>)}
+      <span>More</span>
+    </div>
+  </figure>
+) : (
+  <p class="cg-fallback">
+    Live GitHub graph unavailable right now —{' '}
+    <a href={`https://github.com/${username}`} target="_blank" rel="noopener">see it on GitHub →</a>
+  </p>
+)}

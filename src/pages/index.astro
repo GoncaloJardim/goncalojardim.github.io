@@ -5,7 +5,7 @@ import ImpactBand from '../components/ImpactBand.astro';
 import PipelineDiagram from '../components/PipelineDiagram.astro';
 import EngineStrip from '../components/EngineStrip.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import ContributionGraph from '../components/ContributionGraph.tsx';
+import ContributionGraph from '../components/ContributionGraph.astro';
 import { site } from '../config';
 import { getCollection } from 'astro:content';
 
@@ -54,7 +54,7 @@ const headline = [
       Models, pipelines, n8n workflows, side projects — most days end with a commit. I learn by building
       and I don't consider something understood until I've shipped it. Here's the last year on GitHub.
     </p>
-    <ContributionGraph username={site.githubUsername} client:visible />
+    <ContributionGraph username={site.githubUsername} />
   </section>
 </Base>
 <style>
