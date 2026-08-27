@@ -6,6 +6,7 @@ export const site = {
   email: 'goncalodajardim@gmail.com',
   calendly: 'https://calendly.com/goncalojardim/30min',
   github: 'https://github.com/GoncaloJardim',
+  githubUsername: 'GoncaloJardim',
   linkedin: 'https://www.linkedin.com/in/goncalo-jardim/',
 } as const;
 
