@@ -5,6 +5,7 @@ import ImpactBand from '../components/ImpactBand.astro';
 import Services from '../components/Services.astro';
 import EngineStrip from '../components/EngineStrip.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import ContributionGraph from '../components/ContributionGraph.tsx';
 import { site } from '../config';
 import { getCollection } from 'astro:content';
 
@@ -45,6 +46,15 @@ const headline = [
       on gut feel and copy-paste, that's exactly my kind of thing.
     </p>
     <p style="margin-top:20px"><a class="btn" href={site.calendly} target="_blank" rel="noopener">Book a 30-min call →</a></p>
+  </section>
+  <section id="builder" class="wrap section">
+    <div class="label">Builder at heart</div>
+    <h2>I ship, constantly.</h2>
+    <p class="sub" style="max-width:660px;color:var(--muted)">
+      Models, pipelines, n8n workflows, side projects — most days end with a commit. I learn by building
+      and I don't consider something understood until I've shipped it. Here's the last year on GitHub.
+    </p>
+    <ContributionGraph username={site.githubUsername} client:visible />
   </section>
 </Base>
 <style>
