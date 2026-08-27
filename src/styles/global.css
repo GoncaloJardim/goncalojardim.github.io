@@ -64,9 +64,11 @@ h2{font-size:30px;letter-spacing:-.02em;margin:10px 0 6px;font-weight:700}
 .cg-fallback{color:var(--muted);font-size:14px;margin-top:24px}
 
 /* ---- Vertical pipeline diagram (homepage) ---- */
-.pf-wrap{margin-top:28px}
-.pf-canvas{width:100%;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+/* Two-pane surface: canvas on the left, detail docked on the right. */
+.pf-wrap{margin-top:28px;display:flex;align-items:stretch;
+  border:1px solid var(--line);border-radius:18px;overflow:hidden;
   background:linear-gradient(180deg,#fbfcfe,#fff)}
+.pf-canvas{flex:1 1 auto;min-width:0}
 .pf-canvas .react-flow__panel{display:none}
 
 /* Node: icon chip + label, n8n-style box */
@@ -86,12 +88,13 @@ h2{font-size:30px;letter-spacing:-.02em;margin:10px 0 6px;font-weight:700}
 /* Hide the connection dots; keep the curved edges */
 .pf-node .react-flow__handle{opacity:0;width:6px;height:6px;border:none;min-width:0;min-height:0}
 
-/* Detail panel below the canvas */
-.pf-detail{margin-top:18px;border-top:1px solid var(--line);padding-top:16px;min-height:120px}
-.pf-detail h3{margin:0;font-size:17px;letter-spacing:-.01em}
-.pf-detail .pf-detail-teaser{margin:6px 0 0;font-size:14px;color:var(--muted)}
-.pf-detail ul{margin:12px 0 0;padding-left:0;list-style:none;
-  display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+/* Detail panel docked on the right, inside the diagram surface */
+.pf-detail{flex:0 0 340px;border-left:1px solid var(--line);background:#fff;
+  padding:24px 24px;overflow-y:auto}
+.pf-detail .pf-detail-eyebrow{font-size:11px;font-weight:650;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.pf-detail h3{margin:0;font-size:18px;letter-spacing:-.01em}
+.pf-detail .pf-detail-teaser{margin:8px 0 0;font-size:14px;color:var(--muted);line-height:1.5}
+.pf-detail ul{margin:16px 0 0;padding-left:0;list-style:none;display:grid;gap:14px}
 .pf-detail li{font-size:13.5px;line-height:1.55;color:#26304a}
-.pf-detail li strong{color:var(--ink);font-weight:650}
-@media (max-width:760px){ .pf-detail ul{grid-template-columns:1fr} }
+.pf-detail li strong{display:block;color:var(--ink);font-weight:650;margin-bottom:2px}
