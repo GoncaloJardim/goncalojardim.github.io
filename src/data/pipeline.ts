@@ -162,6 +162,7 @@ export const activation: PipelineStage[] = [
 
 /** The converge node between the two fan-outs. */
 export const performance = {
+  id: 'performance',
   title: 'Performance Measuring',
   teaser: 'Close the loop — measure everything the engine does.',
 };
