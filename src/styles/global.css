@@ -66,9 +66,9 @@ h2{font-size:30px;letter-spacing:-.02em;margin:10px 0 6px;font-weight:700}
 /* ---- Vertical pipeline diagram (homepage) ---- */
 /* Two-pane surface: canvas on the left, detail docked on the right. */
 .pf-wrap{margin-top:28px;display:flex;align-items:stretch;
-  border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  border:1px solid var(--line);border-radius:18px;
   background:linear-gradient(180deg,#fbfcfe,#fff)}
-.pf-canvas{flex:1 1 auto;min-width:0}
+.pf-canvas{flex:1 1 auto;min-width:0;overflow:hidden;border-radius:18px 0 0 18px}
 .pf-canvas .react-flow__panel{display:none}
 
 /* Node: icon chip + label, n8n-style box */
@@ -88,9 +88,12 @@ h2{font-size:30px;letter-spacing:-.02em;margin:10px 0 6px;font-weight:700}
 /* Hide the connection dots; keep the curved edges */
 .pf-node .react-flow__handle{opacity:0;width:6px;height:6px;border:none;min-width:0;min-height:0}
 
-/* Detail panel docked on the right, inside the diagram surface */
+/* Detail panel docked on the right; inner content sticks to the viewport
+   so it follows you down the tall diagram and never scrolls out of view. */
 .pf-detail{flex:0 0 340px;border-left:1px solid var(--line);background:#fff;
-  padding:24px 24px;overflow-y:auto}
+  border-radius:0 18px 18px 0}
+.pf-detail-inner{position:sticky;top:20px;padding:24px;
+  max-height:calc(100vh - 40px);overflow-y:auto}
 .pf-detail .pf-detail-eyebrow{font-size:11px;font-weight:650;letter-spacing:.08em;
   text-transform:uppercase;color:var(--accent);margin-bottom:8px}
 .pf-detail h3{margin:0;font-size:18px;letter-spacing:-.01em}

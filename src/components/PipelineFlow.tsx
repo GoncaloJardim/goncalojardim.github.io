@@ -72,20 +72,22 @@ export default function PipelineFlow({ height = 860 }: { height?: number }) {
       </div>
 
       <aside className="pf-detail" aria-live="polite">
-        {selected && (
-          <>
-            <div className="pf-detail-eyebrow">What happens here</div>
-            <h3>{selected.title}</h3>
-            {selected.teaser && <p className="pf-detail-teaser">{selected.teaser}</p>}
-            {selected.items.length > 0 && (
-              <ul>
-                {selected.items.map((it) => (
-                  <li key={it.label}><strong>{it.label}</strong><span>{it.detail}</span></li>
-                ))}
-              </ul>
-            )}
-          </>
-        )}
+        <div className="pf-detail-inner">
+          {selected && (
+            <>
+              <div className="pf-detail-eyebrow">What happens here</div>
+              <h3>{selected.title}</h3>
+              {selected.teaser && <p className="pf-detail-teaser">{selected.teaser}</p>}
+              {selected.items.length > 0 && (
+                <ul>
+                  {selected.items.map((it) => (
+                    <li key={it.label}><strong>{it.label}</strong><span>{it.detail}</span></li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+        </div>
       </aside>
     </div>
   );
