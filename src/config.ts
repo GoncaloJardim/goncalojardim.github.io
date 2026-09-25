@@ -2,7 +2,7 @@ export const site = {
   name: 'Gonçalo Jardim',
   tagline: 'GTM Data Scientist / Engineer',
   valueProp:
-    "From TAM building and enrichment, to account and lead scoring, to scaling your growth channels (outbound & ads) and making data plain easy to access from the ground up — whether through your AI tool or your reporting. I build the systems and the engine end to end, from TAM prospecting to data activation. An engineer, not a list builder.",
+    "Zero to one across your GTM data infrastructure — prioritization, prospecting, enrichment, campaign deployment, and the reporting and attribution that closes the loop. An engineer focused on revenue, not a list builder.",
   email: 'goncalodajardim@gmail.com',
   calendly: 'https://calendly.com/goncalojardim/30min',
   github: 'https://github.com/GoncaloJardim',
