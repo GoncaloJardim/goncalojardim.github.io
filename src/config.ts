@@ -2,7 +2,7 @@ export const site = {
   name: 'Gonçalo Jardim',
   tagline: 'GTM Data Scientist / Engineer',
   valueProp:
-    "Zero to one across your GTM data infrastructure — prioritization, prospecting, enrichment, campaign deployment, and the reporting and attribution that closes the loop. An engineer focused on revenue, not a list builder.",
+    "I plug and play the systems that every GTM department needs to perform at scale. An in-house operator or a fractional hire takes months to show results. With our approach, you leverage our systems from day one. Hit the ground running and earn clear measurable ROI.",
   email: 'goncalodajardim@gmail.com',
   calendly: 'https://calendly.com/goncalojardim/30min',
   github: 'https://github.com/GoncaloJardim',
