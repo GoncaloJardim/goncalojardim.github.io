@@ -1,11 +1,9 @@
 {
-  "name": "dalat",
+  "name": "goncalojardim.github.io",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "private": true,
+  "description": "Portfolio site for Gonçalo Jardim, built with Astro and deployed to GitHub Pages.",
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -13,10 +11,6 @@
     "check": "astro check",
     "test": "vitest run"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
   "engines": {
     "node": ">=20.3"
   },
