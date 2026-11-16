@@ -24,3 +24,10 @@ I also teach. I've mentored 190+ people moving into data analytics and data scie
 ## About this repo
 
 This is the source for my portfolio, a static [Astro](https://astro.build) site with interactive React Flow architecture diagrams, deployed to GitHub Pages. To run it locally or add a project, see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
+
+Quick start:
+
+```sh
+npm install
+npm run dev
+```
