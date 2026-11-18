@@ -3,7 +3,7 @@ import { site } from '../config';
 ---
 <header class="hero wrap">
   <span class="eyebrow">{site.tagline}</span>
-  <h1>I build the engines that give you<br/>scalable pipeline.</h1>
+  <h1>I build the engines that give you<br class="br-desk" /> scalable pipeline.</h1>
   <p class="lead">{site.valueProp}</p>
   <div class="hero-cta">
     <a class="btn" href={site.calendly} target="_blank" rel="noopener">Book a 30-min call →</a>
@@ -11,8 +11,10 @@ import { site } from '../config';
   </div>
 </header>
 <style>
-  .hero{padding:84px 0 10px;text-align:center}
-  .hero .lead{font-size:19px;color:var(--muted);max-width:640px;margin:0 auto 26px}
+  .hero{padding-top:84px;padding-bottom:10px;text-align:center}
+  .hero .lead{max-width:640px;margin:0 auto 26px}
+  @media (max-width:760px){ .hero{padding-top:48px} .br-desk{display:none} }
+  @media (max-width:480px){ .hero{padding-top:36px} .hero-cta .btn{flex:1 1 100%;text-align:center;padding:12px 16px} }
   .hero-cta{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap}
   .hero-sub{margin-top:16px;font-size:13.5px;color:var(--muted);display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
 </style>
