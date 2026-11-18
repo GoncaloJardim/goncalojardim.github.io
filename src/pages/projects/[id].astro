@@ -18,7 +18,7 @@ const d = project.data;
   <main class="wrap section">
     <p><a href={withBase('')} class="back">← All work</a></p>
     <span class="eyebrow">{site.tagline}</span>
-    <h1 style="font-size:40px">{d.title}</h1>
+    <h1 class="page-title">{d.title}</h1>
     <p class="lead">{d.pitch}</p>
 
     <div class="label" style="margin-top:26px">Interactive · animated</div>
@@ -40,11 +40,12 @@ const d = project.data;
   </main>
 </Base>
 <style>
-  .lead{font-size:19px;color:var(--muted);max-width:680px}
+  .lead{max-width:680px}
   .back{color:var(--muted);font-size:14px}
   .prose{max-width:680px;margin-top:10px}
   .prose :global(h2){font-size:22px;margin-top:32px}
   .prose :global(p),.prose :global(li){color:#26304a}
   .meta{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:28px}
   .chips{display:flex;gap:6px;flex-wrap:wrap}
+  @media (max-width:480px){ .meta .btn{width:100%;text-align:center} }
 </style>

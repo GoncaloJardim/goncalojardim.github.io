@@ -9,13 +9,23 @@ import { site, withBase } from '../config';
       <a href={withBase('stack')}>Stack</a>
       <a href={withBase('experience')}>Experience</a>
       <a href={withBase('#about')}>About</a>
-      <a class="btn" href={site.calendly} target="_blank" rel="noopener">Book a call</a>
     </div>
+    <a class="btn cta" href={site.calendly} target="_blank" rel="noopener">Book a call</a>
   </div>
 </nav>
 <style>
-  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
-  .brand{font-weight:650;letter-spacing:-.01em}
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:22px;height:64px}
+  .brand{font-weight:650;letter-spacing:-.01em;margin-right:auto;white-space:nowrap}
   .nav-links{display:flex;gap:22px;align-items:center;color:var(--muted);font-size:14px}
+  .cta{white-space:nowrap}
+  /* Phones: brand + CTA on the first row, links on a full-width second row.
+     Kept in this scoped block: scoped selectors outrank global ones. */
+  @media (max-width:640px){
+    .nav-in{flex-wrap:wrap;height:auto;row-gap:0;column-gap:12px;padding-top:10px}
+    .nav-links{order:3;flex:1 0 100%;gap:20px;overflow-x:auto;scrollbar-width:none;
+      margin:4px 0 0;padding:6px 0 10px}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-links a{white-space:nowrap;padding:4px 0}
+  }
 </style>

@@ -25,5 +25,6 @@ const { metrics, kind = 'metric' } = Astro.props;
   .impact-capability .tile .v{font-size:15px;font-weight:650;letter-spacing:-.01em;color:var(--ink)}
   .impact-capability .dot{flex:none;width:8px;height:8px;border-radius:999px;background:var(--accent)}
 
-  @media (max-width:760px){ .impact{grid-template-columns:1fr 1fr} }
+  @media (max-width:760px){ .impact{grid-template-columns:1fr 1fr;gap:12px;margin:28px auto} .tile{padding:16px} }
+  @media (max-width:480px){ .impact-capability{grid-template-columns:1fr} .tile .v{font-size:26px} }
 </style>
